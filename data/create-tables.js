@@ -25,17 +25,6 @@ async function run() {
         fantasy_points FLOAT NOT NULL,
         user_id INTEGER NOT NULL REFERENCES users(id)
       );
-
-      CREATE TABLE allPlayers (
-        id SERIAL PRIMARY KEY NOT NULL,
-        height FLOAT NOT NULL,
-        weight FLOAT NOT NULL,
-        jersey INTEGER NOT NULL,
-        player_id VARCHAR(128) NOT NULL,
-        name VARCHAR(512) NOT NULL,
-        position VARCHAR(128) NOT NULL,
-        fantasy_points FLOAT NOT NULL,
-      )
     `);
 
     console.log('create tables complete');
