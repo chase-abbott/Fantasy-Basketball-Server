@@ -1,4 +1,4 @@
-import { mungePlayerData } from '../utils/munge-functions.js';
+import { mungePlayerData, seedPlayers } from '../utils/munge-functions.js';
 
 describe('Test munge functions', () => {
   test('Munge player stats to fantasy points', () => {
@@ -13695,6 +13695,10 @@ describe('Test munge functions', () => {
     const expected = mungePlayerData(player);
     expect(expected).toEqual(46);
 
+  });
+  test('formatting API players', async () => {
+    const expected = await seedPlayers();
+    expect(expected).toBe(0);
   });
 
 });

@@ -10,7 +10,7 @@ async function run() {
 
   try {
 
-    const data = await Promise.all(
+    await Promise.all(
       users.map(user => {
         return client.query(`
           INSERT INTO users (name, email, hash)
@@ -21,15 +21,15 @@ async function run() {
       })
     );
     
-    const user = data[0].rows[0];
+    // const user = data[0].rows[0];
 
     await Promise.all(
       players.map(player => {
         return client.query(`
-        INSERT INTO cats (player_id, name, position, fantasy_points, user_id)
+        INSERT INTO allPlayers (player_id, height, weight, jersey, name, position, fantasy_points)
         VALUES ($1, $2, $3, $4, $5, $6, $7)
         `,
-        [player.playerId, player.name, player.position, player.fantasyPoints, user.id]);
+        [player.playerId, player.heightInMeters, player.weightInKilograms, player.leagues.standard.jersey, player.name, player.position, player.fantasyPoints]);
       })
     );
     
