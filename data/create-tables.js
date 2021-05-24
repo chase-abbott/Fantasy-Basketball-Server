@@ -19,7 +19,7 @@ async function run() {
     
       CREATE TABLE userPlayers (
         id SERIAL PRIMARY KEY NOT NULL,
-        player_id VARCHAR(128) NOT NULL,
+        player_id INTEGER NOT NULL,
         name VARCHAR(512) NOT NULL,
         position VARCHAR(128) NOT NULL,
         fantasy_points FLOAT NOT NULL,
