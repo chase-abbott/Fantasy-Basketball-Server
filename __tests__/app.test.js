@@ -5,13 +5,13 @@ import { execSync } from 'child_process';
 
 const request = supertest(app);
 
-describe.skip('API Routes', () => {
+describe('API Routes', () => {
 
   afterAll(async () => {
     return client.end();
   });
 
-  describe.skip('/api/cats', () => {
+  describe('/api/players', () => {
     let user;
 
     beforeAll(async () => {
@@ -33,14 +33,32 @@ describe.skip('API Routes', () => {
     // append the token to your requests:
     //  .set('Authorization', user.token);
     
-    it('VERB to /api/route [with context]', async () => {
+    it('GET to /api/players to grab players from API and munge', async () => {
       
       // remove this line, here to not have lint error:
-      user.token;
-    
-      // expect(response.status).toBe(200);
-      // expect(response.body).toEqual(?);
-      
+      const response = await request
+        .get('/api/players')
+        .set('Authorization', user.token);
+  
+      expect(response.status).toBe(200);
+    });
+
+    it('POST to /api/me/players to put a player in a users team', async () => {
+      const newPlayer = {
+        id: expect.any(Number),
+        name: 'Lebron James',
+        playerId: 100,
+        position: 'Small Forward',
+        fantasyPoints: 100,
+        userId: user.id
+      };
+      const response = await request
+        .get('api/me/players')
+        .set('Authorization', user.token)
+        .send(newPlayer);
+
+      expect(response.status).toBe(200);
+      expect(response.body).toBe(newPlayer);
     });
 
   });
