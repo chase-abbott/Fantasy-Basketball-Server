@@ -9,7 +9,7 @@ async function run() {
     
     await client.query(`
       DROP TABLE IF EXISTS users CASCADE;
-      DROP TABLE IF EXISTS players;
+      DROP TABLE IF EXISTS userPlayers;
     `);
 
     console.log('drop tables complete');

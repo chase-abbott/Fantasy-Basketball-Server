@@ -1,43 +1,32 @@
-import teamIds from '../data/teamIds.js';
 
-export function formatPlayers(data) {
-  const mungedArray = data.api.players.map((player) => {
-    const matchingPlayer = teamIds.find(id => id === Number(player.teamId));
-    if (matchingPlayer !== undefined && Number(player.yearsPro) !== 0) return player;
-  });
-  return mungedArray.filter(player => {
-    return player !== undefined;
-  });
+import request from 'superagent';
+import dotenv from 'dotenv';
+dotenv.config();
+
+export async function getPlayers(){
+  const response = await request
+    .get('https://fly.sportsdata.io/v3/nba/projections/json/PlayerSeasonProjectionStats/2021')
+    .set('Ocp-Apim-Subscription-Key', process.env.SPORTSDATA_KEY);
+  return response.body;
 }
 
-// A point will be worth one point, naturally. Rebounds will be worth 1.2 points, and assists will be worth 1.5. You'll get three points for every steal and for every blocked shot, and you'll be docked one point for every turnover.
-export function mungePlayerData(data){
- 
-  const playerGames = data.api.statistics.slice(-100);
-
-  const playerPoints = playerGames.reduce((accumulator, currentValue) => {
-    return accumulator += Number(currentValue.points);
-  }, 0);
-  
-  const playerRebounds = playerGames.reduce((accumulator, currentValue) => {
-    return accumulator += (Number(currentValue.totReb) * 1.2);
-  }, 0);
-  
-  const playerAssists = playerGames.reduce((accumulator, currentValue) => {
-    return accumulator += (Number(currentValue.assists) * 1.5);
-  }, 0);
-  
-  const playerBlocks = playerGames.reduce((accumulator, currentValue) => {
-    return accumulator += (Number(currentValue.blocks) * 3);
-  }, 0);
-  
-  const playerSteals = playerGames.reduce((accumulator, currentValue) => {
-    return accumulator += (Number(currentValue.steals) * 3);
-  }, 0);
-
-  const playerTurnovers = playerGames.reduce((accumulator, currentValue) => {
-    return accumulator += (Number(currentValue.turnovers));
-  }, 0);
-
-  return Math.floor(((playerPoints + playerRebounds + playerAssists + playerBlocks + playerSteals - playerTurnovers) / 100));
+export function mungePlayers(players) {
+  const mungedPlayers = players.map(player => {
+    if(player.FantasyPointsYahoo){
+      return {
+        playerId: player.PlayerID,
+        name: player.Name,
+        position: player.Position,
+        fantasyPoints: Math.floor(player.FantasyPointsYahoo / player.Games)
+      };
+    } else {
+      return {
+        playerId: player.PlayerID,
+        name: player.Name,
+        position: player.Position,
+        fantasyPoints: 0
+      };
+    }
+  });
+  return mungedPlayers;
 }

@@ -26,7 +26,7 @@ async function run() {
     await Promise.all(
       players.map(player => {
         return client.query(`
-        INSERT INTO cats (player_id, name, position, fantasy_points, user_id)
+        INSERT INTO userPlayers (player_id, name, position, fantasy_points, user_id)
         VALUES ($1, $2, $3, $4, $5, $6, $7)
         `,
         [player.playerId, player.name, player.position, player.fantasyPoints, user.id]);
