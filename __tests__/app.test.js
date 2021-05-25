@@ -13,7 +13,7 @@ describe('API Routes', () => {
 
   describe('/api/players', () => {
     let user;
-
+  
     beforeAll(async () => {
       execSync('npm run recreate-tables');
 
@@ -26,9 +26,18 @@ describe('API Routes', () => {
         });
 
       expect(response.status).toBe(200);
-
+  
       user = response.body;
+    
     });
+
+    const newPlayer = {
+      id: expect.any(Number),
+      name: 'Lebron James',
+      playerId: 100,
+      position: 'Small Forward',
+      fantasyPoints: 100,
+    };
 
     // append the token to your requests:
     //  .set('Authorization', user.token);
@@ -44,15 +53,8 @@ describe('API Routes', () => {
     });
 
     it('POST to /api/me/players to put a player in a users team', async () => {
-
-      const newPlayer = {
-        id: expect.any(Number),
-        name: 'Lebron James',
-        playerId: 100,
-        position: 'Small Forward',
-        fantasyPoints: 100,
-        userId: user.id
-      };
+      newPlayer.userId = user.id;
+     
       const response = await request
         .post('/api/me/players')
         .set('Authorization', user.token)
@@ -60,6 +62,15 @@ describe('API Routes', () => {
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual(newPlayer);
+    });
+
+    it('GET /api/me/players', async () => {
+      const response = await request
+        .get('/api/me/players')
+        .set('Authorization', user.token);
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual([newPlayer]);
     });
 
   });
