@@ -33,7 +33,7 @@ describe('API Routes', () => {
     // append the token to your requests:
     //  .set('Authorization', user.token);
     
-    it('GET to /api/players to grab players from API and munge', async () => {
+    it.skip('GET to /api/players to grab players from API and munge', async () => {
       
       // remove this line, here to not have lint error:
       const response = await request
@@ -43,7 +43,7 @@ describe('API Routes', () => {
       expect(response.status).toBe(200);
     });
 
-    it('POST to /api/me/players to put a player in a users team', async () => {
+    it.skip('POST to /api/me/players to put a player in a users team', async () => {
 
       const newPlayer = {
         id: expect.any(Number),

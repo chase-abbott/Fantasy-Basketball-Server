@@ -10,6 +10,24 @@ export async function getPlayers(){
   return response.body;
 }
 
+export async function getNews() {
+  const response = await request
+    .get('https://fly.sportsdata.io/v3/nba/scores/json/News')
+    .set('Ocp-Apim-Subscription-Key', process.env.SPORTSDATA_KEY);
+  return response.body;
+}
+
+export function mungeNews(news) {
+  console.log(news);
+  const mungedNews = news.map(player => { {
+    return {
+      news: player.Content
+    };
+  }
+  });
+  return mungedNews;
+}
+
 export function mungePlayers(players) {
   const mungedPlayers = players.map(player => {
     if(player.FantasyPointsYahoo){
