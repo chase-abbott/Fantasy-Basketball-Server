@@ -44,6 +44,7 @@ describe('API Routes', () => {
     });
 
     it('POST to /api/me/players to put a player in a users team', async () => {
+
       const newPlayer = {
         id: expect.any(Number),
         name: 'Lebron James',
@@ -53,12 +54,12 @@ describe('API Routes', () => {
         userId: user.id
       };
       const response = await request
-        .get('api/me/players')
+        .post('/api/me/players')
         .set('Authorization', user.token)
         .send(newPlayer);
 
       expect(response.status).toBe(200);
-      expect(response.body).toBe(newPlayer);
+      expect(response.body).toEqual(newPlayer);
     });
 
   });
