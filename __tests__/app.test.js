@@ -475,7 +475,7 @@ describe('UserTeams Routes', () => {
       expect(myGet.body).toStrictEqual([newTeam]);
      
       const response = await request
-        .delete(`/api/me/team/${newTeam.id}`)
+        .delete(`/api/me/team/${user.id}`)
         .set('Authorization', user.token);
 
       expect(response.status).toBe(200);
