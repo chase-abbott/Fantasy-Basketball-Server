@@ -372,6 +372,16 @@ describe('UserTeams Routes', () => {
         ],
         userId: 1
       });
+      newTeam = response.body;
+    })
+
+    it('GET /api/me/team', async () => {
+      const response = await request
+        .get('/api/me/team')
+        .set('Authorization', user.token);
+
+      expect(response.status).toBe(200);
+      expect(response.body[0]).toEqual(newTeam);
     })
   })
 });
