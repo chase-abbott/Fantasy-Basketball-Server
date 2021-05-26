@@ -372,6 +372,7 @@ describe('UserTeams Routes', () => {
         ],
         userId: 1
       });
+   
       newTeam = response.body;
     });
 
@@ -417,7 +418,7 @@ describe('UserTeams Routes', () => {
       },
       ];
       const response = await request
-        .put('/api/me/team')
+        .put(`/api/me/team/${newTeam.id}`)
         .set('Authorization', user.token)
         .send(newTeam);
 
