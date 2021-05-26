@@ -66,6 +66,7 @@ export function mungeScores(scores) {
   const mungedScores = scores.map(score => { {
     return {
       id: score.GameID,
+      isOver: score.IsClosed,
       status: score.Status,
       awayTeam: score.AwayTeam,
       homeTeam: score.HomeTeam,
