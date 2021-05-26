@@ -383,5 +383,46 @@ describe('UserTeams Routes', () => {
       expect(response.status).toBe(200);
       expect(response.body[0]).toEqual(newTeam);
     })
+
+    it('PUT /api/me/team', async () => {
+      newTeam.startingFive = [{
+        'playerId': 20000440,
+        'name': 'Marcin Gortat',
+        'position': 'C',
+        'fantasyPoints': 0
+      },
+      {
+        'playerId': 20000452,
+        'name': 'Garrett Temple',
+        'position': 'SG',
+        'fantasyPoints': 23
+      },
+      {
+        'playerId': 20000442,
+        'name': 'John Wall',
+        'position': 'PG',
+        'fantasyPoints': 57
+      },
+      {
+        'playerId': 20000458,
+        'name': 'Amir Johnson',
+        'position': 'PF',
+        'fantasyPoints': 0
+      },
+      {
+        'playerId': 20000443,
+        'name': 'Otto Porter Jr.',
+        'position': 'SF',
+        'fantasyPoints': 42
+      },
+      ];
+      const response = await request
+        .put('/api/me/team')
+        .set('Authorization', user.token)
+        .send(newTeam);
+
+      expect(response.status).toBe(200);
+      expect(response.body).toStrictEqual(newTeam)
+    })
   })
 });
