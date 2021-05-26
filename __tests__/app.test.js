@@ -5,7 +5,7 @@ import { execSync } from 'child_process';
 
 const request = supertest(app);
 
-describe('API Routes', () => {
+describe.skip('API Routes', () => {
 
   afterAll(async () => {
     return client.end();
@@ -116,12 +116,13 @@ describe('API Routes', () => {
 });
 
 
-describe.skip('UserTeams Routes', () => {
+describe('UserTeams Routes', () => {
 
   afterAll(async () => {
     return client.end();
   });
-  describe.skip('Routes', () => {
+
+  describe('Routes', () => {
     let user;
     let newTeam;
 
@@ -271,7 +272,7 @@ describe.skip('UserTeams Routes', () => {
       }
     };
 
-    it.skip('POST /api/me/team', async () => {
+    it('POST /api/me/team', async () => {
       newTeam.userId = user.id;
 
       const response = await request
@@ -414,16 +415,17 @@ describe.skip('UserTeams Routes', () => {
       newTeam = response.body;
     });
 
-    it.skip('GET /api/me/team', async () => {
+    it('GET /api/me/team', async () => {
       const response = await request
         .get('/api/me/team')
         .set('Authorization', user.token);
 
       expect(response.status).toBe(200);
       expect(response.body[0]).toEqual(newTeam);
+
     });
 
-    it.skip('PUT /api/me/team', async () => {
+    it('PUT /api/me/team', async () => {
       newTeam.startingFive = [{
         'playerId': 20000440,
         'name': 'Marcin Gortat',
@@ -462,6 +464,29 @@ describe.skip('UserTeams Routes', () => {
 
       expect(response.status).toBe(200);
       expect(response.body).toStrictEqual(newTeam);
+    });
+
+    it('DELETE /api/me/teams/:id should delete all teams associated w/ user', async () => {
+
+      const myGet = await request
+        .get('/api/me/team')
+        .set('Authorization', user.token);
+
+      expect(myGet.body).toStrictEqual([newTeam]);
+     
+      const response = await request
+        .delete(`/api/me/team/${newTeam.id}`)
+        .set('Authorization', user.token);
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual([newTeam]);
+
+
+      const mySecondGet = await request
+        .get('/api/me/team')
+        .set('Authorization', user.token);
+
+      expect(mySecondGet.body).toStrictEqual([]);
     });
   });
 });
