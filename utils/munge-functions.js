@@ -83,12 +83,29 @@ export function mungeScores(scores) {
   return mungedScores;
 }
 
+export async function getVids() {
+  const response = await request
+    .get(`https://www.googleapis.com/youtube/v3/search?part=snippet&key=${process.env.YOUTUBE_KEY}&type=video&videoEmbeddable=true&videoSyndicated=true&videoLicense=any&q=nba&maxResults=3`);
+  return response.body;
+}
+
 export async function getNews() {
   const response = await request
     .get('https://fly.sportsdata.io/v3/nba/scores/json/News')
     .set('Ocp-Apim-Subscription-Key', process.env.SPORTSDATA_KEY);
 
   return response.body;
+}
+
+export function mungeVids(videos) {
+  const mungedVids = videos.items.map(video => { {
+    return {
+      video: video.id.videoId,
+      id: video.etag
+    };
+  }
+  });
+  return mungedVids;
 }
 
 export function mungeNews(news) {
