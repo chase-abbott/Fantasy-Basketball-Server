@@ -28,9 +28,9 @@ async function run() {
 
       CREATE TABLE userTeams (
         id SERIAL PRIMARY KEY NOT NULL,
-        team JSON NOT NULL,
-        starting_five JSON NOT NULL,
-        bench JSON NOT NULL,
+        team JSON[] NOT NULL,
+        starting_five JSON[] NOT NULL,
+        bench JSON[] NOT NULL,
         user_id INTEGER NOT NULL REFERENCES users(id)
       )
     `);
