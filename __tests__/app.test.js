@@ -231,7 +231,7 @@ describe('UserTeams Routes', () => {
             'fantasyPoints': 57
           }]
       }
-    }
+    };
 
     it('POST /api/me/team', async () => {
       newTeam.userId = user.id;
@@ -373,7 +373,7 @@ describe('UserTeams Routes', () => {
         userId: 1
       });
       newTeam = response.body;
-    })
+    });
 
     it('GET /api/me/team', async () => {
       const response = await request
@@ -382,7 +382,7 @@ describe('UserTeams Routes', () => {
 
       expect(response.status).toBe(200);
       expect(response.body[0]).toEqual(newTeam);
-    })
+    });
 
     it('PUT /api/me/team', async () => {
       newTeam.startingFive = [{
@@ -422,7 +422,7 @@ describe('UserTeams Routes', () => {
         .send(newTeam);
 
       expect(response.status).toBe(200);
-      expect(response.body).toStrictEqual(newTeam)
-    })
-  })
+      expect(response.body).toStrictEqual(newTeam);
+    });
+  });
 });
