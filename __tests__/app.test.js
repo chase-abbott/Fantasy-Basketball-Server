@@ -5,13 +5,13 @@ import { execSync } from 'child_process';
 
 const request = supertest(app);
 
-describe.skip('API Routes', () => {
+describe('API Routes', () => {
 
   afterAll(async () => {
     return client.end();
   });
 
-  describe.skip('/api/players', () => {
+  describe('/api/players', () => {
     let user;
 
     beforeAll(async () => {
@@ -42,7 +42,7 @@ describe.skip('API Routes', () => {
     // append the token to your requests:
     //  .set('Authorization', user.token);
 
-    it.skip('GET to /api/players to grab players from API and munge', async () => {
+    it('GET to /api/players to grab players from API and munge', async () => {
 
       // remove this line, here to not have lint error:
       const response = await request
@@ -53,7 +53,7 @@ describe.skip('API Routes', () => {
     });
 
 
-    it.skip('POST to /api/me/players to put a player in a users team', async () => {
+    it('POST to /api/me/players to put a player in a users team', async () => {
       newPlayer.userId = user.id;
 
       const response = await request
@@ -65,7 +65,7 @@ describe.skip('API Routes', () => {
       expect(response.body).toEqual(newPlayer);
     });
 
-    it.skip('GET /api/me/players', async () => {
+    it('GET /api/me/players', async () => {
       const response = await request
         .get('/api/me/players')
         .set('Authorization', user.token);
@@ -74,16 +74,54 @@ describe.skip('API Routes', () => {
       expect(response.body).toEqual([newPlayer]);
     });
 
+    it('DELETE /api/me/players/:id should delete all players associated w/ user', async () => {
+      let anotherPlayer = {
+        'playerId': 20000452,
+        'name': 'Garrett Temple',
+        'position': 'SG',
+        'fantasyPoints': 23
+      };
+      anotherPlayer.userId = user.id;
+
+      const post = await request
+        .post('/api/me/players')
+        .set('Authorization', user.token)
+        .send(anotherPlayer);
+
+      expect(post.status).toBe(200);
+      anotherPlayer = post.body;
+
+      const myGet = await request
+        .get('/api/me/players')
+        .set('Authorization', user.token);
+
+      expect(myGet.body).toStrictEqual([newPlayer, anotherPlayer]);
+
+      const response = await request
+        .delete(`/api/me/players/${user.id}`)
+        .set('Authorization', user.token);
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual([newPlayer, anotherPlayer]);
+
+
+      const mySecondGet = await request
+        .get('/api/me/players')
+        .set('Authorization', user.token);
+
+      expect(mySecondGet.body).toStrictEqual([]);
+    });
+
   });
 });
 
 
-describe('UserTeams Routes', () => {
+describe.skip('UserTeams Routes', () => {
 
   afterAll(async () => {
     return client.end();
   });
-  describe('Routes', () => {
+  describe.skip('Routes', () => {
     let user;
     let newTeam;
 
@@ -233,7 +271,7 @@ describe('UserTeams Routes', () => {
       }
     };
 
-    it('POST /api/me/team', async () => {
+    it.skip('POST /api/me/team', async () => {
       newTeam.userId = user.id;
 
       const response = await request
@@ -376,7 +414,7 @@ describe('UserTeams Routes', () => {
       newTeam = response.body;
     });
 
-    it('GET /api/me/team', async () => {
+    it.skip('GET /api/me/team', async () => {
       const response = await request
         .get('/api/me/team')
         .set('Authorization', user.token);
@@ -385,7 +423,7 @@ describe('UserTeams Routes', () => {
       expect(response.body[0]).toEqual(newTeam);
     });
 
-    it('PUT /api/me/team', async () => {
+    it.skip('PUT /api/me/team', async () => {
       newTeam.startingFive = [{
         'playerId': 20000440,
         'name': 'Marcin Gortat',

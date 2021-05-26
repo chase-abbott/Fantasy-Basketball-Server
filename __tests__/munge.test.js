@@ -8,13 +8,13 @@ describe('Test munge functions', () => {
     expect(expected[0]).toBe(0);
   });
 
-  test('Gets news from API', async () => {
+  test.skip('Gets news from API', async () => {
     const players = await getNews();
     const expected = mungeNews(players);
     expect(expected[0]).toBe(0);
   });
 
-  test('Gets scores from API', async () => {
+  test.skip('Gets scores from API', async () => {
     const scores = await getScores();
     const expected = mungeScores(scores);
     expect(expected[0]).toBe(0);
