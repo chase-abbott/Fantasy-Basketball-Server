@@ -1,10 +1,22 @@
 
-import { getPlayers, mungePlayers } from '../utils/munge-functions.js';
+import { getPlayers, getNews, mungePlayers, mungeNews, getScores, mungeScores } from '../utils/munge-functions.js';
 
-describe.skip('Test munge functions', () => {
-  test('Gets players from API', async () => {
+describe('Test munge functions', () => {
+  test.skip('Gets players from API', async () => {
     const players = await getPlayers();
     const expected = mungePlayers(players);
+    expect(expected[0]).toBe(0);
+  });
+
+  test('Gets news from API', async () => {
+    const players = await getNews();
+    const expected = mungeNews(players);
+    expect(expected[0]).toBe(0);
+  });
+
+  test('Gets scores from API', async () => {
+    const scores = await getScores();
+    const expected = mungeScores(scores);
     expect(expected[0]).toBe(0);
   });
 
