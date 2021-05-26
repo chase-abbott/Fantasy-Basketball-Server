@@ -25,11 +25,19 @@ async function run() {
         fantasy_points FLOAT NOT NULL,
         user_id INTEGER NOT NULL REFERENCES users(id)
       );
+
+      CREATE TABLE userTeams (
+        id SERIAL PRIMARY KEY NOT NULL,
+        team JSON[] NOT NULL,
+        starting_five JSON[] NOT NULL,
+        bench JSON[] NOT NULL,
+        user_id INTEGER NOT NULL REFERENCES users(id)
+      )
     `);
 
     console.log('create tables complete');
   }
-  catch(err) {
+  catch (err) {
     // problem? let's see the error...
     console.log(err);
   }

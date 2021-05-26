@@ -6,19 +6,20 @@ run();
 async function run() {
 
   try {
-    
+
     await client.query(`
       DROP TABLE IF EXISTS users CASCADE;
-      DROP TABLE IF EXISTS userPlayers;
+      DROP TABLE IF EXISTS userPlayers CASCADE;
+      DROP TABLE IF EXISTS userTeams CASCADE;
     `);
 
     console.log('drop tables complete');
   }
-  catch(err) {
+  catch (err) {
     console.log(err);
   }
   finally {
     client.end();
   }
-    
+
 }
