@@ -273,8 +273,7 @@ describe('UserTeams Routes', () => {
     };
 
     it('POST /api/me/team', async () => {
-      newTeam.userId = user.id;
-
+      
       const response = await request
         .post('/api/me/team')
         .set('Authorization', user.token)
@@ -457,6 +456,8 @@ describe('UserTeams Routes', () => {
         'fantasyPoints': 42
       },
       ];
+
+      console.log(newTeam);
       const response = await request
         .put(`/api/me/team/${newTeam.id}`)
         .set('Authorization', user.token)
