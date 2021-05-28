@@ -14,41 +14,41 @@ export async function getScores() {
   let today = new Date();
   let dd = String(today.getDate()).padStart(2, '0');
   let mm;
-  switch (String(today.getMonth() + 1).padStart(2, '0')) {
-    case '01':
+  switch (String(today.getMonth())) {
+    case '0':
       mm = 'JAN';
       break;
-    case '02':
+    case '1':
       mm = 'FEB';
       break;
-    case '03':
+    case '2':
       mm = 'MAR';
       break;
-    case '04':
+    case '3':
       mm = 'APR';
       break;
-    case '05':
+    case '4':
       mm = 'MAY';
       break;
-    case '06':
+    case '5':
       mm = 'JUN';
       break;
-    case '07':
+    case '6':
       mm = 'JUL';
       break;
-    case '08':
+    case '7':
       mm = 'AUG';
       break;
-    case '09':
+    case '8':
       mm = 'SEP';
       break;
-    case '10':
+    case '9':
       mm = 'OCT';
       break;
-    case '11':
+    case '10':
       mm = 'NOV';
       break;
-    case '12':
+    case '11':
       mm = 'DEC';
       break;
   }
