@@ -14,7 +14,7 @@ export async function getScores() {
   let today = new Date();
   let dd = String(today.getDate()).padStart(2, '0');
   let mm;
-  switch (String(today.getMonth()) {
+  switch (String(today.getMonth())) {
     case '0':
       mm = 'JAN';
       break;
