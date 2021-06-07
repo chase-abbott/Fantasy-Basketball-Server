@@ -17,7 +17,7 @@ async function run() {
         hash VARCHAR(512) NOT NULL
       );
     
-      CREATE TABLE userPlayers (
+      CREATE TABLE user_players ( -- snake_case for SQL schemas
         id SERIAL PRIMARY KEY NOT NULL,
         player_id INTEGER NOT NULL,
         name VARCHAR(512) NOT NULL,
@@ -26,11 +26,11 @@ async function run() {
         user_id INTEGER NOT NULL REFERENCES users(id)
       );
 
-      CREATE TABLE userTeams (
+      CREATE TABLE user_teams (
         id SERIAL PRIMARY KEY NOT NULL,
-        team JSON[] NOT NULL,
+        team JSON[] NOT NULL, -- don't hide date with serialization
         starting_five JSON[] NOT NULL,
-        bench JSON[] NOT NULL,
+        bench JSON[] NOT NULL, -- don't hide date with serialization
         user_id INTEGER NOT NULL REFERENCES users(id)
       )
     `);
